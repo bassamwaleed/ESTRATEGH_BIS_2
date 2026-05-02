@@ -9,7 +9,6 @@
 
         body {
             font-family: 'Tajawal', sans-serif;
-            /* خلفية بتدرج لوني عصري وأكثر عمقاً */
             background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
             min-height: 100vh;
             margin: 0;
@@ -21,7 +20,6 @@
             overflow-x: hidden;
         }
 
-        /* تأثير زخرفي للخلفية */
         body::before {
             content: '';
             position: absolute;
@@ -36,23 +34,46 @@
 
         .container {
             text-align: center;
-            background: rgba(255, 255, 255, 0.05); /* شفافية أعلى */
+            background: rgba(255, 255, 255, 0.05);
             padding: 50px 40px;
             border-radius: 30px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 
-                        inset 0 1px 0 rgba(255,255,255,0.1); /* تأثير زجاجي 3D */
+                        inset 0 1px 0 rgba(255,255,255,0.1);
             border: 1px solid rgba(255, 255, 255, 0.08);
             width: 90%;
             max-width: 450px;
             margin-top: 70px; 
+            margin-bottom: 70px;
             position: relative;
             z-index: 1;
         }
 
+        /* === تنسيق رسالة بسام للطلاب === */
+        .heartfelt-message {
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(246, 211, 101, 0.3);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.05em;
+            color: #e2e8f0;
+            position: relative;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+
+        .heartfelt-message h3 {
+            color: #f6d365;
+            margin-top: 0;
+            margin-bottom: 10px;
+            font-size: 1.25em;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+        }
+
         h1 {
-            margin-bottom: 40px;
+            margin-bottom: 20px;
             font-size: 2.2em;
             font-weight: 800;
             background: linear-gradient(to right, #fff, #a1c4fd);
@@ -62,7 +83,6 @@
             line-height: 1.3;
         }
 
-        /* تنسيق التنبيه العلوي - تصميم جديد */
         .header-note {
             position: absolute;
             top: 25px;
@@ -83,7 +103,6 @@
             letter-spacing: 0.5px;
         }
 
-        /* الأزرار الأساسية (اختيارات / صح وخطأ) */
         .btn {
             display: flex;
             align-items: center;
@@ -105,7 +124,6 @@
             overflow: hidden;
         }
 
-        /* تأثير إضاءة عند التمرير */
         .btn::after {
             content: '';
             position: absolute;
@@ -130,7 +148,7 @@
 
         .btn-tf {
             background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            color: #2d3748; /* لون نص غامق ليناسب الخلفية الفاتحة */
+            color: #2d3748;
             box-shadow: 0 8px 20px rgba(253, 160, 133, 0.3);
             border: none;
         }
@@ -144,7 +162,6 @@
             transform: translateY(-1px);
         }
 
-        /* تنسيق خاص لزر الجروب */
         .group-btn {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             border: none;
@@ -162,7 +179,6 @@
             font-size: 1.3em;
         }
 
-        /* تنسيق الفوتر */
         .footer-text {
             margin-top: 40px;
             font-size: 1.1em;
@@ -182,10 +198,9 @@
         .footer-text p {
             margin: 8px 0 0;
             font-size: 0.9em;
-            color: #ff9a9e; /* لمسة لونية خفيفة للدعوة */
+            color: #ff9a9e;
         }
 
-        /* تنسيق عداد الزوار */
         .visitor-counter {
             margin-top: 25px;
             display: flex;
@@ -204,7 +219,6 @@
             letter-spacing: 1px;
         }
 
-        /* حاوية واتساب والنص */
         .whatsapp-container {
             position: fixed;
             bottom: 25px;
@@ -216,7 +230,6 @@
             gap: 10px;
         }
 
-        /* زر الواتساب */
         .whatsapp-float {
             width: 65px;
             height: 65px;
@@ -234,7 +247,6 @@
             position: relative;
         }
 
-        /* تأثير النبض لزر الواتساب */
         .whatsapp-float::before {
             content: '';
             position: absolute;
@@ -254,7 +266,6 @@
             box-shadow: 0 8px 20px rgba(37, 211, 102, 0.6);
         }
 
-        /* النص أسفل الزر */
         .whatsapp-text {
             font-size: 11px;
             color: #fff;
@@ -268,9 +279,8 @@
             border: 1px solid rgba(255,255,255,0.1);
         }
 
-        /* === تنسيقات نافذة إعلان التخرج المنبثقة === */
         .ad-modal-overlay {
-            display: none; /* مخفي افتراضياً */
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
@@ -296,17 +306,16 @@
             border-radius: 20px;
             width: 90%;
             max-width: 380px; 
-            max-height: 85vh; /* أقصى ارتفاع 85% من الشاشة لتجنب خروجها عن الحدود */
+            max-height: 85vh; 
             overflow-y: auto; 
             text-align: center;
             position: relative;
-            border: 2px solid #ffd700; /* إطار ذهبي */
+            border: 2px solid #ffd700;
             box-shadow: 0 15px 40px rgba(0,0,0,0.5), 0 0 20px rgba(255, 215, 0, 0.2);
             transform: scale(0.7);
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        /* تخصيص شكل شريط التمرير للإعلان */
         .ad-content::-webkit-scrollbar {
             width: 6px;
         }
@@ -319,7 +328,6 @@
             transform: scale(1);
         }
 
-        /* تنسيق زر الإغلاق ليكون متناسب مع الموبايل */
         .ad-close-btn {
             position: absolute;
             top: 10px;
@@ -362,7 +370,6 @@
             margin-bottom: 15px;
         }
 
-        /* تنسيق حاوية أزرار التواصل */
         .contact-options {
             display: flex;
             flex-direction: column;
@@ -396,7 +403,6 @@
             margin-bottom: 8px;
         }
 
-        /* تنسيق العداد التنازلي (في الأعلى) */
         .countdown-box {
             display: none; 
             margin-bottom: 20px;
@@ -422,7 +428,6 @@
             color: #fff;
         }
 
-        /* استعلام وسائط للموبايل */
         @media (max-width: 480px) {
             .ad-title { font-size: 1.4em; }
             .ad-desc { font-size: 0.95em; }
@@ -438,8 +443,19 @@
         ⚠️ تنبيه: صلي علي النبي, متعتمدش علي الموقع اعتماد كامل، الهدف منه مراجعة ما ذاكرته من بنك الأسئلة.
     </div>
 
+    <!-- ================= الواجهة الرئيسية (مجانية بالكامل) ================= -->
     <div class="container">
         <h1>مادة استراتيجية نظم</h1>
+        
+        <!-- رسالة بسام للطلاب -->
+        <div class="heartfelt-message">
+            <h3>إخواتي ودفعتي (خريجي 2026) ❤️</h3>
+            <p style="margin: 0; font-size: 0.95em;">
+                عملت الموقع ده بمجهود شخصي ومجاني بالكامل عشان نساعد بعض ونخفف توتر الامتحانات. 
+                أربع سنين بحلوهم ومرهم بيخلصوا، ودي حاجة بسيطة أتمنى تفيدكم وتسهل عليكم المراجعة.<br>
+                <strong style="color: #fff;">ربنا يجبر بخاطرنا جميعاً ونفرح بنجاحنا.. متنسونيش من دعواتكم الحلوة.</strong>
+            </p>
+        </div>
         
         <!-- رابط لصفحة الاختيارات -->
         <a href="Quiz.html" class="btn btn-quiz quiz-link">
@@ -469,7 +485,7 @@
         </div>
     </div>
 
-    <!-- مجموعة واتساب -->
+    <!-- مجموعة واتساب العائمة -->
     <div class="whatsapp-container">
         <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
             <svg style="width: 32px; height: 32px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -484,7 +500,6 @@
         <div class="ad-content">
             <button class="ad-close-btn" onclick="closeAd()">&times;</button>
             
-            <!-- عداد الثواني للانتقال التلقائي (الآن في الأعلى) -->
             <div id="countdown-container" class="countdown-box">
                 سيتم نقلك للامتحان تلقائياً خلال <span id="countdown-timer">10</span> ثواني
             </div>
@@ -502,14 +517,29 @@
             <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1.1em;">للحجز والاستفسار تواصل مع:</h4>
             
             <div class="contact-options">
-                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank">أ. خالد</a>
-                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank">بسام وليد</a>
-                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank">أيمن حازم</a>
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank">
+                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
+                    أ. خالد
+                </a>
+                
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank">
+                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
+                    بسام وليد
+                </a>
+
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank">
+                    <svg style="width: 20px; height: 20px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
+                    أيمن حازم
+                </a>
             </div>
         </div>
     </div>
 
     <script>
+        // ==========================================
+        // نظام الإعلانات والانتقال
+        // ==========================================
+        
         let targetUrl = null;
         let countdownInterval = null;
 
@@ -555,13 +585,13 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // ظهور تلقائي بعد 5 ثواني
+            // ظهور تلقائي للإعلان بعد 5 ثواني من فتح الموقع
             setTimeout(() => {
                 const adModal = document.getElementById('graduationAd');
                 if (!adModal.classList.contains('show')) openAd();
             }, 5000);
 
-            // إظهار الإعلان عند الضغط على أزرار الامتحانات
+            // تفعيل أزرار الاختبارات لفتح الإعلان أولاً والعد التنازلي ثم الانتقال
             const quizLinks = document.querySelectorAll('.quiz-link');
             quizLinks.forEach(link => {
                 link.addEventListener('click', function(e) {
