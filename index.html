@@ -292,10 +292,12 @@
 
         .ad-content {
             background: linear-gradient(135deg, #2c3e50 0%, #1a202c 100%);
-            padding: 40px 30px;
-            border-radius: 25px;
-            width: 85%;
-            max-width: 450px;
+            padding: 25px 20px;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 380px; 
+            max-height: 85vh; /* أقصى ارتفاع 85% من الشاشة لتجنب خروجها عن الحدود */
+            overflow-y: auto; 
             text-align: center;
             position: relative;
             border: 2px solid #ffd700; /* إطار ذهبي */
@@ -304,48 +306,68 @@
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
+        /* تخصيص شكل شريط التمرير للإعلان */
+        .ad-content::-webkit-scrollbar {
+            width: 6px;
+        }
+        .ad-content::-webkit-scrollbar-thumb {
+            background-color: #ffd700;
+            border-radius: 10px;
+        }
+
         .ad-modal-overlay.show .ad-content {
             transform: scale(1);
         }
 
+        /* تنسيق زر الإغلاق ليكون متناسب مع الموبايل */
         .ad-close-btn {
             position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: #a0aec0;
-            font-size: 30px;
+            top: 10px;
+            right: 10px;
+            background: #e53e3e;
+            color: white;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
             cursor: pointer;
-            transition: color 0.3s;
+            transition: all 0.3s;
             line-height: 1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 10;
         }
 
         .ad-close-btn:hover {
-            color: #f56565;
+            background: #c53030;
+            transform: scale(1.1);
         }
 
         .ad-title {
             color: #ffd700;
-            font-size: 2em;
+            font-size: 1.6em; 
             font-weight: 800;
-            margin-bottom: 15px;
+            margin-bottom: 12px;
             text-shadow: 0 2px 4px rgba(0,0,0,0.5);
+            margin-top: 10px; 
         }
 
         .ad-desc {
             color: #e2e8f0;
-            font-size: 1.1em;
-            line-height: 1.7;
-            margin-bottom: 20px;
+            font-size: 1em; 
+            line-height: 1.6;
+            margin-bottom: 15px;
         }
 
-        /* تنسيق حاوية أزرار التواصل الجديدة */
+        /* تنسيق حاوية أزرار التواصل */
         .contact-options {
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-top: 15px;
+            gap: 10px;
+            margin-top: 10px;
         }
 
         .ad-action-btn {
@@ -355,23 +377,57 @@
             gap: 10px;
             background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
             color: #2d3748;
-            padding: 12px 25px;
+            padding: 10px 20px; 
             border-radius: 20px;
-            font-size: 1.1em;
+            font-size: 1.05em; 
             font-weight: bold;
             text-decoration: none;
-            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            box-shadow: 0 5px 10px rgba(253, 160, 133, 0.3);
             transition: all 0.3s ease;
         }
 
         .ad-action-btn:hover {
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+            box-shadow: 0 8px 15px rgba(253, 160, 133, 0.5);
         }
 
         .ad-icon {
-            font-size: 40px;
-            margin-bottom: 10px;
+            font-size: 35px;
+            margin-bottom: 8px;
+        }
+
+        /* تنسيق العداد التنازلي (في الأعلى) */
+        .countdown-box {
+            display: none; 
+            margin-bottom: 20px;
+            padding: 8px;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px dashed #ffd700;
+            border-radius: 15px;
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 0.85em;
+            animation: pulse-border 1.5s infinite alternate;
+        }
+
+        @keyframes pulse-border {
+            from { border-color: rgba(255, 215, 0, 0.3); }
+            to { border-color: rgba(255, 215, 0, 1); }
+        }
+
+        #countdown-timer {
+            font-size: 1.3em;
+            display: inline-block;
+            min-width: 25px;
+            color: #fff;
+        }
+
+        /* استعلام وسائط للموبايل */
+        @media (max-width: 480px) {
+            .ad-title { font-size: 1.4em; }
+            .ad-desc { font-size: 0.95em; }
+            .ad-action-btn { padding: 8px 15px; font-size: 0.95em; }
+            .contact-options { gap: 8px; }
         }
     </style>
 </head>
@@ -386,12 +442,12 @@
         <h1>مادة استراتيجية نظم</h1>
         
         <!-- رابط لصفحة الاختيارات -->
-        <a href="Quiz.html" class="btn btn-quiz">
+        <a href="Quiz.html" class="btn btn-quiz quiz-link">
             <span class="icon">📝</span> أسئلة الاختيارات
         </a>
 
         <!-- رابط لصفحة الصح والخطأ -->
-        <a href="TrueFalse.html" class="btn btn-tf">
+        <a href="TrueFalse.html" class="btn btn-tf quiz-link">
             <span class="icon">✅</span> أسئلة صح وخطأ
         </a>
 
@@ -409,12 +465,11 @@
         <!-- عداد الزوار -->
         <div class="visitor-counter">
             <span class="visitor-label">مرات الزيارة</span>
-            <!-- تم تغيير page_id لتبدأ من جديد مخصصة لمادة استراتيجية نظم -->
             <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_strategy_home_v2" alt="عدد الزوار" style="height: 22px;">
         </div>
     </div>
 
-    <!-- مجموعة واتساب (الزر + النص) -->
+    <!-- مجموعة واتساب -->
     <div class="whatsapp-container">
         <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
             <svg style="width: 32px; height: 32px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -428,62 +483,94 @@
     <div id="graduationAd" class="ad-modal-overlay">
         <div class="ad-content">
             <button class="ad-close-btn" onclick="closeAd()">&times;</button>
+            
+            <!-- عداد الثواني للانتقال التلقائي (الآن في الأعلى) -->
+            <div id="countdown-container" class="countdown-box">
+                سيتم نقلك للامتحان تلقائياً خلال <span id="countdown-timer">10</span> ثواني
+            </div>
+
             <div class="ad-icon">🎓✨</div>
-            <div class="ad-title" style="font-size: 1.8em;">إعلان هام لفرقة رابعة<br><span style="font-size: 0.8em; color: #fff;">خريجي دفعة 2026</span></div>
+            <div class="ad-title">إعلان هام لفرقة رابعة<br><span style="font-size: 0.8em; color: #fff;">خريجي دفعة 2026</span></div>
             <div class="ad-desc">
                 <strong>دفعة الأبطال، حان وقت التتويج! 🌟</strong>
                 <br><br>
-                بعد سنين من التعب والمذاكرة، وصلنا لخط النهاية. يلا بينا نختم المشوار بحفلة تخرج أسطورية تليق بتعبنا وتفرح أهالينا. دي مش مجرد حفلة، دي ذكرى هتعيش معانا طول العمر!
-                <br><br>
-                <span style="color: #f56565; font-weight: bold;">العدد محدود جداً</span>، احجز مكانك وعيش اللحظة اللي استنيتها سنين!
+                بعد سنين من التعب والمذاكرة، وصلنا لخط النهاية. يلا بينا نختم المشوار بحفلة تخرج أسطورية.
+                <br>
+                <span style="color: #f56565; font-weight: bold;">العدد محدود جداً</span>، احجز مكانك الآن!
             </div>
             
-            <h4 style="color: #ffd700; margin-bottom: 10px; font-size: 1.2em;">للحجز والاستفسار تواصل مع:</h4>
+            <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1.1em;">للحجز والاستفسار تواصل مع:</h4>
             
             <div class="contact-options">
-                <!-- أضف رقم أ. خالد مكان كلمة "رقم_خالد" (مثال: 201012345678) -->
-                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank">
-                    <svg style="width: 22px; height: 22px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
-                    أ. خالد
-                </a>
-                
-                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank">
-                    <svg style="width: 22px; height: 22px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
-                    بسام وليد
-                </a>
-
-                <!-- أضف رقم أيمن مكان كلمة "رقم_ايمن" (مثال: 201012345678) -->
-                <a href="https://wa.me/رقم_ايمن" class="ad-action-btn" target="_blank">
-                    <svg style="width: 22px; height: 22px; fill: currentColor;" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/></svg>
-                    أيمن حازم
-                </a>
+                <a href="https://wa.me/201015060646" class="ad-action-btn" target="_blank">أ. خالد</a>
+                <a href="https://wa.me/201286094595" class="ad-action-btn" target="_blank">بسام وليد</a>
+                <a href="https://wa.me/201012138063" class="ad-action-btn" target="_blank">أيمن حازم</a>
             </div>
         </div>
     </div>
 
     <script>
-        // دالة إغلاق الإعلان
+        let targetUrl = null;
+        let countdownInterval = null;
+
         function closeAd() {
             const adModal = document.getElementById('graduationAd');
             adModal.classList.remove('show');
-            // إخفاء العنصر تماماً بعد انتهاء الأنيميشن
+            if (countdownInterval) clearInterval(countdownInterval);
+            
             setTimeout(() => {
                 adModal.style.display = 'none';
+                if (targetUrl) {
+                    window.location.href = targetUrl;
+                    targetUrl = null;
+                }
             }, 500);
         }
 
-        // إظهار الإعلان بعد 10 ثواني من فتح الصفحة
+        function openAd(url = null) {
+            targetUrl = url;
+            const adModal = document.getElementById('graduationAd');
+            const countdownContainer = document.getElementById('countdown-container');
+            const countdownSpan = document.getElementById('countdown-timer');
+            
+            adModal.style.display = 'flex';
+            setTimeout(() => adModal.classList.add('show'), 50);
+
+            if (url) {
+                countdownContainer.style.display = 'block';
+                let secondsLeft = 10;
+                countdownSpan.innerText = secondsLeft;
+                
+                countdownInterval = setInterval(() => {
+                    secondsLeft--;
+                    countdownSpan.innerText = secondsLeft;
+                    if (secondsLeft <= 0) {
+                        clearInterval(countdownInterval);
+                        closeAd();
+                    }
+                }, 1000);
+            } else {
+                countdownContainer.style.display = 'none';
+            }
+        }
+
         window.addEventListener('DOMContentLoaded', () => {
+            // ظهور تلقائي بعد 5 ثواني
             setTimeout(() => {
                 const adModal = document.getElementById('graduationAd');
-                adModal.style.display = 'flex'; // جعله مرئياً أولاً
-                // إضافة الكلاس المسؤول عن الأنيميشن بعد لحظة بسيطة ليعمل التأثير
-                setTimeout(() => {
-                    adModal.classList.add('show');
-                }, 50);
-            }, 10000); // 10000 مللي ثانية = 10 ثواني
+                if (!adModal.classList.contains('show')) openAd();
+            }, 5000);
+
+            // إظهار الإعلان عند الضغط على أزرار الامتحانات
+            const quizLinks = document.querySelectorAll('.quiz-link');
+            quizLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    openAd(this.href);
+                });
+            });
         });
     </script>
-
 </body>
+</html>
 </html>
