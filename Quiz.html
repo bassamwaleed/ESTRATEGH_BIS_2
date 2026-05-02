@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك اسئله ماده المالية العامة</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap');
+
+        body {
+            font-family: 'Tajawal', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #333;
+        }
+
+        .quiz-card {
+            background: rgba(255, 255, 255, 0.95);
+            width: 90%;
+            max-width: 600px;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+            text-align: center;
+            position: relative;
+        }
+
+        h2 {
+            color: #4a4a4a;
+            margin-bottom: 15px;
+            border-bottom: 2px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .controls-container {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e9ecef;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .control-row {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .control-label {
+            font-weight: bold;
+            color: #555;
+            font-size: 0.9em;
+        }
+
+        .num-input {
+            padding: 8px;
+            border-radius: 10px;
+            border: 1px solid #ddd;
+            width: 50px;
+            text-align: center;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 1em;
+        }
+
+        .top-btn {
+            background-color: white;
+            color: #555;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-family: 'Tajawal', sans-serif;
+            font-size: 0.85em;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .top-btn:hover {
+            background-color: #e2e6ea;
+            transform: translateY(-2px);
+        }
+
+        .start-btn {
+            background-color: #667eea;
+            color: white;
+            border: none;
+            font-weight: bold;
+        }
+
+        .start-btn:hover {
+            background-color: #5a6fd6;
+            color: white;
+        }
+
+        .toggle-btn.active {
+            background-color: #764ba2;
+            color: white;
+            border-color: #764ba2;
+        }
+
+        .question-number {
+            background: #764ba2;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 50px;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        .question {
+            font-size: 1.4em;
+            margin-bottom: 30px;
+            color: #2c3e50;
+            font-weight: bold;
+            line-height: 1.5;
+            text-align: center; 
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .option-btn {
+            padding: 18px;
+            border: 2px solid #e0e0e0;
+            background: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-family: 'Tajawal', sans-serif;
+            transition: all 0.2s ease;
+            color: #555;
+            position: relative;
+            overflow: hidden;
+            text-align: center;
+        }
+
+        .option-btn:hover:not(:disabled) {
+            background-color: #f8f9fa;
+            border-color: #764ba2;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        .option-btn:disabled {
+            cursor: default;
+            transform: none;
+        }
+
+        .option-btn.correct {
+            background-color: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+
+        .option-btn.wrong {
+            background-color: #f8d7da;
+            border-color: #dc3545;
+            color: #721c24;
+        }
+
+        .score-area {
+            margin-top: 25px;
+            font-weight: bold;
+            color: #764ba2;
+            font-size: 1.1em;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 25px;
+            color: #888;
+            text-decoration: none;
+            font-size: 0.9em;
+            transition: color 0.3s;
+        }
+
+        .back-btn:hover {
+            color: #764ba2;
+        }
+
+        .mistakes-container {
+            text-align: right;
+            max-height: 300px;
+            overflow-y: auto;
+            margin-top: 15px;
+            padding: 10px;
+            background: #f9f9f9;
+            border-radius: 10px;
+            border: 1px solid #eee;
+        }
+
+        .mistake-item {
+            background: white;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 8px;
+            border-right: 4px solid #dc3545;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .mistake-q {
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+
+        .mistake-wrong {
+            color: #dc3545;
+            font-size: 0.95em;
+        }
+
+        .mistake-correct {
+            color: #28a745;
+            font-size: 0.95em;
+            font-weight: bold;
+        }
+
+        .progress-bar {
+            height: 6px;
+            background: #eee;
+            border-radius: 3px;
+            margin-bottom: 25px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .whatsapp-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .whatsapp-float {
+            width: 60px;
+            height: 60px;
+            background-color: #25d366;
+            color: #FFF;
+            border-radius: 50%;
+            text-align: center;
+            font-size: 30px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .whatsapp-float:hover {
+            background-color: #128c7e;
+            transform: scale(1.1);
+        }
+
+        .whatsapp-text {
+            font-size: 11px;
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 5px 8px;
+            border-radius: 8px;
+            text-align: center;
+            max-width: 120px;
+            line-height: 1.4;
+            backdrop-filter: blur(4px);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="quiz-card">
+        
+        <!-- لوحة التحكم في الأسئلة -->
+        <div class="controls-container">
+            <div class="control-row">
+                <button id="shuffle-btn" class="top-btn toggle-btn" onclick="toggleShuffle()">
+                    <span>🔢</span> الترتيب: عادي
+                </button>
+                <button id="show-num-btn" class="top-btn toggle-btn active" onclick="toggleShowNumbers()">
+                    <span>🆔</span> رقم السؤال: ظاهر
+                </button>
+            </div>
+            <div class="control-row">
+                <span class="control-label">من:</span>
+                <input type="number" id="q-start" class="num-input" min="1" value="1">
+                <span class="control-label">إلى:</span>
+                <input type="number" id="q-end" class="num-input" min="1" value="10">
+                <span style="font-size: 0.8em; color: #777;">(المجموع: <span id="total-available">0</span>)</span>
+                <button onclick="applySettings()" class="top-btn start-btn">بدء</button>
+            </div>
+        </div>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progress-fill"></div>
+        </div>
+        
+        <div class="question-number">السؤال <span id="q-curr">1</span> من <span id="q-total">0</span></div>
+        
+        <div id="quiz-container">
+            <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+            <div class="options" id="options-container">
+                <!-- الخيارات ستظهر هنا -->
+            </div>
+            <div class="score-area" id="score-text">النتيجة: 0</div>
+        </div>
+        
+        <a href="index.html" class="back-btn">← العودة للقائمة الرئيسية</a>
+    </div>
+
+    <!-- مجموعة واتساب -->
+    <div class="whatsapp-container">
+        <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
+            <svg style="width: 35px; height: 35px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
+            </svg>
+        </a>
+        <div class="whatsapp-text">تواصل معنا عبر واتساب إذا لاحظت مشكلة</div>
+    </div>
+
+    <script>
+ const originalQuestions = [            
+       {
+        "t": "يُعرَّف النظام بأنه:",
+        "o": ["مجموعة عناصر عشوائية", "مجموعة عناصر مترابطة ومتناسقة", "عنصر واحد فقط", "بيانات غير مفيدة"],
+        "a": 1
+    },
+    {
+        "t": "تبدأ عملية النظام بـ:",
+        "o": ["المخرجات", "العمليات", "المدخلات", "النتائج"],
+        "a": 2
+    },
+    {
+        "t": "المدخلات في النظام تمثل:",
+        "o": ["النتائج النهائية", "البيانات المختلفة", "العمليات", "الأهداف"],
+        "a": 1
+    },
+    {
+        "t": "الهدف من معالجة البيانات هو:",
+        "o": ["حذفها", "تحويلها إلى مخرجات", "تخزينها فقط", "تجاهلها"],
+        "a": 1
+    },
+    {
+        "t": "النظام يُعتبر:",
+        "o": ["كيان غير منظم", "كيان كلي متناسق", "عناصر منفصلة", "بيانات فقط"],
+        "a": 1
+    },
+    {
+        "t": "من خصائص المدخلات:",
+        "o": ["قد تكون مستمرة أو متقطعة", "لا تتغير", "تأتي مرة واحدة فقط", "غير مهمة"],
+        "a": 0
+    },
+    {
+        "t": "المدخلات الإنسانية تشمل:",
+        "o": ["الآلات", "الأفراد وقيمهم واتجاهاتهم", "المعدات", "التكنولوجيا"],
+        "a": 1
+    },
+    {
+        "t": "المدخلات المادية تتمثل في:",
+        "o": ["السياسات", "العلاقات الإنسانية", "رؤوس الأموال والمعدات", "المعلومات"],
+        "a": 2
+    },
+    {
+        "t": "المدخلات التكنولوجية تعني:",
+        "o": ["الأفراد", "القيم", "القوانين", "أساليب الإنتاج الفنية"],
+        "a": 3
+    },
+    {
+        "t": "المخرجات تُعرَّف بأنها:",
+        "o": ["ما يدخل إلى النظام", "ما يخرج من المنظمة إلى البيئة", "العمليات الداخلية", "المدخلات فقط"],
+        "a": 1
+    },
+    {
+        "t": "المخرجات الإنسانية تتمثل في:",
+        "o": ["الأفراد الذين تم إعدادهم وتنميتهم", "السلع والخدمات", "المعلومات", "التكنولوجيا"],
+        "a": 0
+    },
+    {
+        "t": "المخرجات المادية تشمل:",
+        "o": ["الأفكار", "الآراء", "السلع والخدمات", "القيم"],
+        "a": 2
+    },
+    {
+        "t": "المخرجات المعنوية تعني:",
+        "o": ["المعدات", "الأفراد", "الآلات", "المعلومات والأفكار والآراء"],
+        "a": 3
+    },
+    {
+        "t": "النظام الذي يتفاعل مع البيئة الخارجية يسمى:",
+        "o": ["نظام مفتوح", "نظام مغلق", "نظام عشوائي", "نظام ثابت"],
+        "a": 0
+    },
+    {
+        "t": "من خصائص النظام المغلق:",
+        "o": ["يتأثر بالبيئة الخارجية", "يعتمد على المدخلات الخارجية", "لا يتفاعل مع البيئة", "يتغير باستمرار"],
+        "a": 2
+    },
+    {
+        "t": "في النظام المفتوح، تغيير المدخلات يؤدي إلى:",
+        "o": ["ثبات المخرجات", "عدم وجود مخرجات", "توقف النظام", "تغير المخرجات"],
+        "a": 3
+    },
+    {
+        "t": "ما الهدف الرئيسي من استخدام نظم المعلومات في العمليات؟",
+        "o": ["زيادة التعقيد", "تقليل الأخطاء وزيادة الكفاءة", "تقليل التواصل", "إلغاء البيانات"],
+        "a": 1
+    },
+    {
+        "t": "كيف تدعم نظم المعلومات اتخاذ القرار؟",
+        "o": ["حذف البيانات", "جمع وتحليل البيانات", "تقليل المعلومات", "تأخير القرارات"],
+        "a": 1
+    },
+    {
+        "t": "ما دور التشفير في نظم المعلومات؟",
+        "o": ["تسريع العمل فقط", "حذف المعلومات", "تقليل البيانات", "زيادة الأمان وحماية البيانات"],
+        "a": 3
+    },
+    {
+        "t": "نظم المعلومات تساعد الإدارة على:",
+        "o": ["اتخاذ قرارات عشوائية", "اتخاذ قرارات سليمة", "تأجيل القرارات", "تجاهل البيانات"],
+        "a": 1
+    },
+    {
+        "t": "زيادة الأمان تؤدي إلى:",
+        "o": ["زيادة الثقة بين العملاء والموردين", "فقدان الثقة", "تقليل السمعة", "تقليل الأداء"],
+        "a": 0
+    },
+    {
+        "t": "التواصل الجيد داخل المؤسسة يؤدي إلى:",
+        "o": ["بطء العمل", "زيادة التعارض", "سرعة إنجاز الأعمال", "تقليل الإنتاج"],
+        "a": 2
+    },
+    {
+        "t": "نظم المعلومات تساهم في تحسين الأداء من خلال:",
+        "o": ["إهمال البيانات", "دعم العمليات والقرارات والتواصل والأمان", "تقليل الكفاءة", "تعطيل العمل"],
+        "a": 1
+    },
+    {
+        "t": "يشير مصطلح العولمة إلى:",
+        "o": ["انعزال الدول", "ازدياد العلاقات بين الدول والمجتمعات", "تقليل التبادل الثقافي", "منع الاستثمارات"],
+        "a": 1
+    },
+    {
+        "t": "من خصائص العولمة الاقتصادية:",
+        "o": ["منع رؤوس الأموال", "حرية انتقال رؤوس الأموال والاستثمارات", "إغلاق الأسواق", "تقليل الإنتاج"],
+        "a": 1
+    },
+    {
+        "t": "تؤدي العولمة إلى:",
+        "o": ["انتشار المعلومات والأفكار", "اختفاء المعرفة", "تقليل الاتصال", "منع الثقافة"],
+        "a": 0
+    },
+    {
+        "t": "من تأثيرات العولمة الثقافية:",
+        "o": ["ثبات العادات", "تأثر المجتمعات بثقافات أخرى", "منع التقاليد", "اختفاء القيم"],
+        "a": 1
+    },
+    {
+        "t": "من الجوانب السلبية للعولمة:",
+        "o": ["الحفاظ الكامل على الهوية", "تأثر القيم والعادات المحلية", "زيادة العزلة", "منع الأفكار"],
+        "a": 1
+    },
+    {
+        "t": "انتقال الأفكار في العولمة يكون:",
+        "o": ["بطيئًا جدًا", "سريعًا ومنتشرًا عالميًا", "محدودًا", "معدومًا"],
+        "a": 1
+    },
+    {
+        "t": "من نتائج العولمة:",
+        "o": ["انغلاق المجتمعات", "تفاعل الثقافات المختلفة", "توقف التبادل", "تقليل العلاقات الدولية"],
+        "a": 1
+    },
+    {
+        "t": "يركز المدخل التقني على:",
+        "o": ["الجوانب الاقتصادية", "البرامج والشبكات ونظم التشغيل", "العلاقات التنظيمية", "القرارات الإدارية"],
+        "a": 1
+    },
+    {
+        "t": "يُعرف المدخل التقني أيضًا بـ:",
+        "o": ["المدخل الإداري", "مدخل تكنولوجيا المعلومات", "المدخل الاقتصادي", "المدخل السلوكي"],
+        "a": 1
+    },
+    {
+        "t": "يهتم المدخل الإداري بـ:",
+        "o": ["الأجهزة فقط", "المكونات التنظيمية وتأثيرها على الإدارة", "التكلفة فقط", "الشبكات فقط"],
+        "a": 1
+    },
+    {
+        "t": "يركز المدخل الإداري على:",
+        "o": ["العلاقة بين النظام والبيئة التنظيمية", "تجاهل البيئة", "حذف البيانات", "تقليل الأداء"],
+        "a": 0
+    },
+    {
+        "t": "من أمثلة برامج الإدارة الحديثة:",
+        "o": ["الألعاب", "الجودة الشاملة وإدارة المعرفة", "الطباعة", "البريد التقليدي"],
+        "a": 1
+    },
+    {
+        "t": "يهتم المدخل الاقتصادي بـ:",
+        "o": ["الشبكات", "تحليل تكلفة وقيمة المعلومات", "الاتصالات فقط", "الأجهزة"],
+        "a": 1
+    },
+    {
+        "t": "اقتصاد المعرفة يرتبط بـ:",
+        "o": ["المدخل التقني", "المدخل الإداري", "المدخل الاقتصادي", "المدخل القانوني"],
+        "a": 2
+    },
+    {
+        "t": "حماية موارد المعلومات تندرج تحت:",
+        "o": ["المدخل الإداري", "المدخل الاقتصادي", "المدخل التقني", "المدخل الاجتماعي"],
+        "a": 2
+    },
+    {
+        "t": "ما الهدف الأساسي لنظام المعلومات الاستراتيجية؟",
+        "o": ["دعم الميزة التنافسية للمؤسسة", "زيادة الأعمال الورقية", "تقليل عدد الموظفين", "حفظ البيانات فقط"],
+        "a": 0
+    },
+    {
+        "t": "يساعد نظام المعلومات الاستراتيجية في:",
+        "o": ["اتخاذ قرارات عشوائية", "إلغاء التخطيط", "دعم اتخاذ القرارات الاستراتيجية", "تقليل استخدام التكنولوجيا"],
+        "a": 2
+    },
+    {
+        "t": "من خصائص نظام المعلومات الاستراتيجية أنه:",
+        "o": ["يركز على العمليات اليومية فقط", "لا يهتم بالمنافسة", "يدعم الابتكار وتحسين الأداء", "يستخدم في المحاسبة فقط"],
+        "a": 2
+    },
+    {
+        "t": "الهدف الأساسي من التخطيط الاستراتيجي هو:",
+        "o": ["زيادة الأعمال اليومية فقط", "إلغاء الأهداف", "تقليل عدد العاملين", "تحقيق رؤية مستقبلية للمنظمة"],
+        "a": 3
+    },
+    {
+        "t": "يعتمد التخطيط الاستراتيجي على:",
+        "o": ["العشوائية في اتخاذ القرار", "الموارد المتاحة في المنظمة", "إلغاء التخطيط", "القرارات الفردية فقط"],
+        "a": 1
+    },
+    {
+        "t": "من نتائج التخطيط الاستراتيجي:",
+        "o": ["عدم وضوح الأهداف", "تحديد أهداف واضحة للمؤسسة", "زيادة الفوضى", "تقليل المعلومات"],
+        "a": 1
+    },
+    {
+        "t": "التخطيط الاستراتيجي يساعد في:",
+        "o": ["تجاهل المستقبل", "تحديد خطوات لتحقيق الأهداف", "إلغاء الموارد", "التركيز على الماضي فقط"],
+        "a": 1
+    },
+    {
+        "t": "التخطيط الاستراتيجي يربط بين:",
+        "o": ["الماضي والحاضر فقط", "الأهداف والخطوات التنفيذية", "الموظفين فقط", "المنافسين فقط"],
+        "a": 1
+    },
+    {
+        "t": "يهدف التخطيط لنظم المعلومات الاستراتيجية إلى:",
+        "o": ["زيادة العمالة فقط", "المواءمة بين الاستثمار في نظم المعلومات وأهداف المنظمة", "تقليل استخدام التكنولوجيا", "إلغاء نظم المعلومات"],
+        "a": 1
+    },
+    {
+        "t": "من أهداف التخطيط الاستراتيجي لنظم المعلومات:",
+        "o": ["الاستغلال الأمثل لتكنولوجيا المعلومات لتحقيق الميزة التنافسية", "إيقاف التطوير التقني", "تقليل الموارد البشرية", "إهمال الإدارة"],
+        "a": 0
+    },
+    {
+        "t": "تعني تعبئة وتوجيه وإدارة موارد نظام المعلومات:",
+        "o": ["إهدار الموارد", "الاستخدام غير المخطط", "الاستخدام الفعال للموارد", "إلغاء التخطيط"],
+        "a": 2
+    },
+    {
+        "t": "تطوير سياسات تكنولوجيا المعلومات يهدف إلى:",
+        "o": ["العشوائية في الاستخدام", "بناء إطار منظم لاستخدام التكنولوجيا", "تقليل الأجهزة", "إلغاء الإنترنت"],
+        "a": 1
+    },
+    {
+        "t": "من مهام التخطيط الاستراتيجي:",
+        "o": ["تجاهل المستقبل", "إيقاف التطوير", "تقليل الإنتاج", "تحديد وتوجيه المسارات الاستراتيجية للمنظمة"],
+        "a": 3
+    },
+    {
+        "t": "صياغة رسالة المنظمة وأهدافها يساعد على:",
+        "o": ["زيادة الفوضى", "توضيح الاتجاه العام للمنظمة", "تقليل التواصل", "إلغاء الإدارة"],
+        "a": 1
+    },
+    {
+        "t": "تحديد وتوجيه مسار العمل في المنظمة يساهم في:",
+        "o": ["العشوائية", "تحقيق أهداف المنظمة بكفاءة", "إيقاف العمل", "تقليل الأداء"],
+        "a": 1
+    },
+    {
+        "t": "المواءمة بين الاستثمار في نظم المعلومات تعني:",
+        "o": ["الإنفاق بدون هدف", "ربط الاستثمار بالأهداف التنظيمية", "تقليل التكنولوجيا", "إهمال التخطيط"],
+        "a": 1
+    },
+    {
+        "t": "الميزة التنافسية تتحقق من خلال:",
+        "o": ["الاستخدام الفعال لتكنولوجيا المعلومات", "تجاهل التكنولوجيا", "تقليل التطوير", "إلغاء الإدارة"],
+        "a": 0
+    },
+    {
+        "t": "التخطيط الاستراتيجي لنظم المعلومات يساعد في:",
+        "o": ["تعطيل المنظمة", "دعم اتخاذ القرار وتوجيه المستقبل", "إيقاف الأنشطة", "تقليل الموارد فقط"],
+        "a": 1
+    },
+    {
+        "t": "النموذج الخطي يعتمد على:",
+        "o": ["التغير المستمر", "استقرار البيئة", "الفوضى", "العشوائية"],
+        "a": 1
+    },
+    {
+        "t": "النموذج التكييفي يهتم بـ:",
+        "o": ["تجاهل البيئة", "التكيف مع البيئة", "القرارات الفردية", "الجمود"],
+        "a": 1
+    },
+    {
+        "t": "النموذج التفسيري يعتمد بشكل أساسي على:",
+        "o": ["الدافعية", "الأجهزة", "الأرقام فقط", "اللوائح"],
+        "a": 0
+    },
+    {
+        "t": "النموذج الكمي يبدأ من:",
+        "o": ["الجزء إلى الكل", "الكل إلى الجزء", "السوق", "الموظفين"],
+        "a": 1
+    },
+    {
+        "t": "النموذج الجزئي يبدأ من:",
+        "o": ["الكل", "الجزء", "الإدارة العليا", "البيئة الخارجية"],
+        "a": 1
+    },
+    {
+        "t": "النموذج التحليلي يعتمد على:",
+        "o": ["التحليل", "الوصف فقط", "التخمين", "العشوائية"],
+        "a": 0
+    },
+    {
+        "t": "النموذج الوصفي يركز على:",
+        "o": ["الأرقام", "التحليل الكمي", "الوصف", "البرمجة"],
+        "a": 2
+    },
+    {
+        "t": "نموذج هارفارد يوازن بين:",
+        "o": ["الداخل فقط", "الخارج فقط", "الداخل والخارج", "الموظفين فقط"],
+        "a": 2
+    },
+    {
+        "t": "النموذج التفسيري يعتمد على:",
+        "o": ["تحليل كمي", "الإنتاج", "التسويق فقط", "تفسير الواقع"],
+        "a": 3
+    },
+    {
+        "t": "نموذج هارفارد يتكون من:",
+        "o": ["مرحلة واحدة", "مرحلتين", "ثلاث مراحل", "أربع مراحل"],
+        "a": 1
+    },
+    {
+        "t": "النموذج التكييفي يركز على:",
+        "o": ["البيئة الداخلية فقط", "البيئة الخارجية", "الموظفين فقط", "الإنتاج"],
+        "a": 1
+    },
+    {
+        "t": "نظم دعم القرارات تُستخدم أساسًا في:",
+        "o": ["تخزين البيانات فقط", "تحليل البيانات واتخاذ القرار", "تشغيل الأجهزة", "تصميم الشبكات"],
+        "a": 1
+    },
+    {
+        "t": "من خصائص نظم دعم القرارات:",
+        "o": ["عدم القدرة على التعامل مع بيانات كبيرة", "الاعتماد على مصدر بيانات واحد", "المرونة في إعداد التقارير", "عدم إجراء تحليلات"],
+        "a": 2
+    },
+    {
+        "t": "يمكن لنظم دعم القرارات الحصول على البيانات من:",
+        "o": ["جهاز واحد فقط", "مصدر واحد فقط", "مصادر متعددة", "الإنترنت فقط"],
+        "a": 2
+    },
+    {
+        "t": "الذكاء الاصطناعي يُعد:",
+        "o": ["مجالًا محدودًا", "حقلًا واسعًا متعدد التخصصات", "علمًا رياضيًا فقط", "نظامًا تقليديًا"],
+        "a": 1
+    },
+    {
+        "t": "يختلف الذكاء الاصطناعي عن النظم التقليدية في:",
+        "o": ["استخدام الأجهزة فقط", "سرعته فقط", "حجمه", "تعامله مع المعرفة إضافة إلى البيانات"],
+        "a": 3
+    },
+    {
+        "t": "من ميادين الذكاء الاصطناعي:",
+        "o": ["النظم الخبيرة", "الإنسان الآلي", "معالجة اللغات الطبيعية", "جميع ما سبق"],
+        "a": 3
+    },
+    {
+        "t": "تهدف النظم الخبيرة في مجال الأعمال إلى:",
+        "o": ["تقليل الإنتاج", "زيادة الربحية وتخفيض التكاليف", "إلغاء الخدمات", "تخزين البيانات فقط"],
+        "a": 1
+    },
+    {
+        "t": "من خصائص النظم الخبيرة:",
+        "o": ["فقدان المعرفة", "حفظ الخبرات البشرية النادرة", "تجاهل المعلومات", "بطء الأداء"],
+        "a": 1
+    },
+    {
+        "t": "النظم الخبيرة تساعد في:",
+        "o": ["حل المشكلات البسيطة فقط", "حل المشكلات المعقدة بسرعة", "تأخير القرارات", "إلغاء التحليل"],
+        "a": 1
+    },
+    {
+        "t": "من فوائد النظم الخبيرة:",
+        "o": ["احتكار الخبرة في مكان واحد", "نشر الخبرة في أكثر من مكان", "إلغاء دور الإنسان", "تقليل المعرفة"],
+        "a": 1
+    },
+    {
+        "t": "تهدف دراسة بيئة المنظمة إلى:",
+        "o": ["زيادة الإنتاج فقط", "تحديد العوامل الخارجية المؤثرة على المنظمة", "تحسين الرواتب", "تقليل عدد العاملين"],
+        "a": 1
+    },
+    {
+        "t": "من أمثلة الاعتبارات المالية:",
+        "o": ["عدد العاملين", "معدل العائد على الأصول", "التكنولوجيا المستخدمة", "القوانين السياسية"],
+        "a": 1
+    },
+    {
+        "t": "تهدف الأهداف طويلة الأجل إلى:",
+        "o": ["الحفاظ على الوضع الحالي", "الانتقال من الوضع الحالي إلى الوضع المرغوب", "تقليل عدد الموظفين", "إلغاء الخطط المستقبلية"],
+        "a": 1
+    },
+    {
+        "t": "من الجوانب التي تتناولها الأهداف طويلة الأجل:",
+        "o": ["الترفيه", "النمو", "الهوايات", "العلاقات الشخصية"],
+        "a": 1
+    },
+    {
+        "t": "أي مما يلي يُعد من الأهداف طويلة الأجل؟",
+        "o": ["الرواتب اليومية", "الربحية", "الحضور والانصراف", "الإجازات"],
+        "a": 1
+    },
+    {
+        "t": "تطوير المنتجات والخدمات يهدف إلى:",
+        "o": ["تقليل الجودة", "مواكبة احتياجات السوق وتحسين الأداء", "تقليل العملاء", "إلغاء المنافسة"],
+        "a": 1
+    },
+
+        ];
+  // تعيين الأرقام التعريفية للأسئلة
+        originalQuestions.forEach((q, index) => {
+            q.id = index + 1;
+        });
+
+        // تحديث الحد الأقصى للإدخال
+        document.getElementById('q-start').max = originalQuestions.length;
+        document.getElementById('q-end').max = originalQuestions.length;
+        document.getElementById('q-end').value = originalQuestions.length;
+        document.getElementById('total-available').innerText = originalQuestions.length;
+
+        let questions = [...originalQuestions];
+        let currentQuestion = 0;
+        let score = 0;
+        let isRandom = false; 
+        let showNumbers = true; // متغير جديد للتحكم في ظهور الأرقام
+        let wrongAnswers = []; 
+
+        function toggleShuffle() {
+            isRandom = !isRandom;
+            const btn = document.getElementById('shuffle-btn');
+            if (isRandom) {
+                btn.innerHTML = "<span>🔀</span> الترتيب: عشوائي";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🔢</span> الترتيب: عادي";
+                btn.classList.remove('active');
+            }
+            applySettings();
+        }
+
+        // دالة تبديل ظهور رقم السؤال
+        function toggleShowNumbers() {
+            showNumbers = !showNumbers;
+            const btn = document.getElementById('show-num-btn');
+            if (showNumbers) {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: ظاهر";
+                btn.classList.add('active');
+            } else {
+                btn.innerHTML = "<span>🆔</span> رقم السؤال: مخفي";
+                btn.classList.remove('active');
+            }
+            // تحديث السؤال الحالي فوراً
+            if (questions.length > 0 && currentQuestion < questions.length) {
+                updateQuestionDisplay();
+            }
+        }
+
+        function applySettings() {
+            const startInput = document.getElementById('q-start');
+            const endInput = document.getElementById('q-end');
+            let start = parseInt(startInput.value);
+            let end = parseInt(endInput.value);
+            
+            if (isNaN(start) || start < 1) start = 1;
+            if (isNaN(end) || end > originalQuestions.length) end = originalQuestions.length;
+            if (start > end) start = end;
+
+            startInput.value = start;
+            endInput.value = end;
+
+            let selectedQuestions = originalQuestions.slice(start - 1, end);
+
+            if (isRandom) {
+                for (let i = selectedQuestions.length - 1; i > 0; i--) {
+                    const j = Math.floor(Math.random() * (i + 1));
+                    [selectedQuestions[i], selectedQuestions[j]] = [selectedQuestions[j], selectedQuestions[i]];
+                }
+            }
+
+            questions = selectedQuestions;
+            document.getElementById('q-total').innerText = questions.length;
+            restartQuiz();
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            score = 0;
+            wrongAnswers = []; 
+            if (questions.length === 0) return;
+
+            document.getElementById('quiz-container').innerHTML = `
+                <div class="question" id="question-text">جاري تحميل الأسئلة...</div>
+                <div class="options" id="options-container"></div>
+                <div class="score-area" id="score-text">النتيجة: 0</div>
+            `;
+            loadQuestion();
+        }
+
+        // دالة مساعدة لتحديث نص السؤال فقط
+        function updateQuestionDisplay() {
+            const q = questions[currentQuestion];
+            const qTextElement = document.getElementById('question-text');
+            if (showNumbers) {
+                qTextElement.innerText = q.id + ". " + q.t;
+            } else {
+                qTextElement.innerText = q.t;
+            }
+        }
+
+        function loadQuestion() {
+            updateQuestionDisplay();
+            document.getElementById('q-curr').innerText = currentQuestion + 1;
+            
+            const progress = ((currentQuestion) / questions.length) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+
+            const container = document.getElementById('options-container');
+            container.innerHTML = '';
+            const letters = ['أ', 'ب', 'ج', 'د'];
+
+            questions[currentQuestion].o.forEach((opt, index) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.innerText = `${letters[index]} - ${opt}`;
+                btn.onclick = () => checkAnswer(index, btn);
+                container.appendChild(btn);
+            });
+        }
+
+        function checkAnswer(selectedIndex, btnElement) {
+            const allBtns = document.querySelectorAll('.option-btn');
+            allBtns.forEach(b => b.disabled = true);
+            const correctIndex = questions[currentQuestion].a;
+
+            if (selectedIndex === correctIndex) {
+                btnElement.classList.add('correct');
+                score++;
+            } else {
+                btnElement.classList.add('wrong');
+                allBtns[correctIndex].classList.add('correct');
+                wrongAnswers.push({
+                    q: questions[currentQuestion].t,
+                    selected: questions[currentQuestion].o[selectedIndex],
+                    correct: questions[currentQuestion].o[correctIndex],
+                    qNum: questions[currentQuestion].id 
+                });
+            }
+
+            document.getElementById('score-text').innerText = `النتيجة: ${score} من ${questions.length}`;
+
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showFinalResult();
+                }
+            }, 1500);
+        }
+
+        function showFinalResult() {
+            document.getElementById('progress-fill').style.width = '100%';
+            let resultHTML = `
+                <h3>🎉 انتهى الامتحان!
+                    متنسانيش بدعوه حلوه و صلي علي النبي</h3>
+                <p style="font-size:1.5em; margin: 20px 0;">نتيجتك النهائية: <br> <strong>${score}</strong> من <strong>${questions.length}</strong></p>
+                <button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none;">إعادة الاختبار</button>
+            `;
+            if (wrongAnswers.length > 0) {
+                resultHTML += `
+                    <br>
+                    <button class="option-btn" onclick="showMistakes()" style="background:#e74c3c; color:white; border:none; margin-top: 10px;">عرض الإجابات الخاطئة</button>
+                `;
+            }
+            document.getElementById('quiz-container').innerHTML = resultHTML;
+        }
+
+        function showMistakes() {
+            let mistakesHTML = `<h3>ملخص الأخطاء</h3><div class="mistakes-container">`;
+            wrongAnswers.forEach(item => {
+                mistakesHTML += `
+                    <div class="mistake-item">
+                        <div class="mistake-q">س${item.qNum}: ${item.q}</div>
+                        <div class="mistake-wrong">❌ إجابتك: ${item.selected}</div>
+                        <div class="mistake-correct">✅ الصح: ${item.correct}</div>
+                    </div>
+                `;
+            });
+            mistakesHTML += `</div><button class="option-btn" onclick="restartQuiz()" style="background:#764ba2; color:white; border:none; margin-top: 15px;">إعادة الاختبار</button>`;
+            document.getElementById('quiz-container').innerHTML = mistakesHTML;
+        }
+
+        applySettings();
+    </script>
+
+</body>
+</html>
