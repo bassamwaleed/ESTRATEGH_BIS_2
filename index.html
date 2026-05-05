@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>مادة استراتيجية نظم</title>
+    <title>ماده استراتيجيه نظم</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
 
@@ -32,6 +32,33 @@
             pointer-events: none;
         }
 
+        /* === زر تفاصيل الحفلة أعلى اليمين === */
+        .top-right-badge {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
+            color: #2d3748;
+            padding: 12px 20px;
+            border-radius: 25px;
+            font-family: 'Tajawal', sans-serif;
+            font-weight: 800;
+            font-size: 1em;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
+            cursor: pointer;
+            z-index: 1000; /* ليكون فوق كل العناصر */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 2px solid rgba(255,255,255,0.5);
+        }
+
+        .top-right-badge:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
+        }
+
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.05);
@@ -44,7 +71,7 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             width: 90%;
             max-width: 450px;
-            margin-top: 70px; 
+            margin-top: 90px; /* تم زيادة المسافة لعدم التداخل مع الزر العلوي */
             margin-bottom: 70px;
             position: relative;
             z-index: 1;
@@ -78,6 +105,7 @@
             font-weight: 800;
             background: linear-gradient(to right, #fff, #a1c4fd);
             -webkit-background-clip: text;
+            background-clip: text;
             -webkit-text-fill-color: transparent;
             text-shadow: 2px 4px 8px rgba(0,0,0,0.2);
             line-height: 1.3;
@@ -305,7 +333,7 @@
             padding: 25px 20px;
             border-radius: 20px;
             width: 90%;
-            max-width: 380px; 
+            max-width: 400px; 
             max-height: 85vh; 
             overflow-y: auto; 
             text-align: center;
@@ -428,7 +456,20 @@
             color: #fff;
         }
 
-        @media (max-width: 480px) {
+        /* تنسيقات الموبايل للزر العلوي وملاحظة الهيدر */
+        @media (max-width: 768px) {
+            .header-note {
+                top: 80px; /* لعدم التداخل مع زر الحفلة العلوي في الموبايل */
+            }
+            .container {
+                margin-top: 130px;
+            }
+            .top-right-badge {
+                top: 15px;
+                right: 15px;
+                padding: 10px 15px;
+                font-size: 0.85em;
+            }
             .ad-title { font-size: 1.4em; }
             .ad-desc { font-size: 0.95em; }
             .ad-action-btn { padding: 8px 15px; font-size: 0.95em; }
@@ -438,6 +479,11 @@
 </head>
 <body>
 
+    <!-- زر تفاصيل الحفلة في أعلى اليمين -->
+    <button class="top-right-badge" onclick="openAd()">
+        🎓 تفاصيل حفلة التخرج
+    </button>
+
     <!-- التنبيه في أعلى الصفحة -->
     <div class="header-note">
         ⚠️ تنبيه: صلي علي النبي, متعتمدش علي الموقع اعتماد كامل، الهدف منه مراجعة ما ذاكرته من بنك الأسئلة.
@@ -445,7 +491,7 @@
 
     <!-- ================= الواجهة الرئيسية (مجانية بالكامل) ================= -->
     <div class="container">
-        <h1>مادة استراتيجية نظم</h1>
+        <h1> ماده استراتيجيه نظم</h1>
         
         <!-- رسالة بسام للطلاب -->
         <div class="heartfelt-message">
@@ -479,7 +525,7 @@
         </div>
 
         <!-- عداد الزوار -->
-        <div class="visitor-counter">
+        <!--<div class="visitor-counter">
             <span class="visitor-label">مرات الزيارة</span>
             <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_strategy_home_v2" alt="عدد الزوار" style="height: 22px;">
         </div>
@@ -506,14 +552,21 @@
 
             <div class="ad-icon">🎓✨</div>
             <div class="ad-title">إعلان هام لفرقة رابعة<br><span style="font-size: 0.8em; color: #fff;">خريجي دفعة 2026</span></div>
+            
+            <!-- تم تعديل نص الرسالة وإضافة زر الجروب هنا -->
             <div class="ad-desc">
-                <strong>دفعة الأبطال، حان وقت التتويج! 🌟</strong>
+                <strong>أخواتي وأبطال دفعة 2026 🌟</strong>
                 <br><br>
-                بعد سنين من التعب والمذاكرة، وصلنا لخط النهاية. يلا بينا نختم المشوار بحفلة تخرج أسطورية.
-                <br>
-                <span style="color: #f56565; font-weight: bold;">العدد محدود جداً</span>، احجز مكانك الآن!
+                أربع سنين عدوا بحلوهم ومرهم، ضحكنا وتعبنا وسهرنا مع بعض، وجه الوقت اللي نتوج فيه تعب السنين دي كلها بحفلة تليق بينا وتفرح أهالينا اللي تعبوا عشاننا. دي مش مجرد حفلة، دي آخر ذكرى هتجمعنا قبل ما كل واحد يبدأ طريق حياته.
+                <br><br>
+                <span style="color: #f56565; font-weight: bold;">مستنيينكم نختم المشوار سوا.. العدد محدود جداً!</span>
             </div>
             
+            <!-- زر الانضمام لجروب الحفلة -->
+            <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none;">
+                <span style="font-size: 1.3em;">📢</span> انضم لجروب الحفلة الآن
+            </a>
+
             <h4 style="color: #ffd700; margin-bottom: 8px; font-size: 1.1em;">للحجز والاستفسار تواصل مع:</h4>
             
             <div class="contact-options">
@@ -557,6 +610,7 @@
             }, 500);
         }
 
+        // عند فتح الإعلان بدون رابط (مثل الضغط على الزر العلوي)، لن يظهر العداد
         function openAd(url = null) {
             targetUrl = url;
             const adModal = document.getElementById('graduationAd');
@@ -585,12 +639,6 @@
         }
 
         window.addEventListener('DOMContentLoaded', () => {
-            // ظهور تلقائي للإعلان بعد 5 ثواني من فتح الموقع
-            setTimeout(() => {
-                const adModal = document.getElementById('graduationAd');
-                if (!adModal.classList.contains('show')) openAd();
-            }, 5000);
-
             // تفعيل أزرار الاختبارات لفتح الإعلان أولاً والعد التنازلي ثم الانتقال
             const quizLinks = document.querySelectorAll('.quiz-link');
             quizLinks.forEach(link => {
@@ -602,5 +650,4 @@
         });
     </script>
 </body>
-</html>
 </html>
