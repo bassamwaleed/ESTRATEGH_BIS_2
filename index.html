@@ -13,16 +13,28 @@
             min-height: 100vh;
             margin: 0;
             display: flex;
-            justify-content: center;
+            flex-direction: column;
+            justify-content: flex-start; /* تغيير التوسيط لمنع قص المحتوى من الأعلى في الموبايل */
             align-items: center;
             color: #fff;
             position: relative;
             overflow-x: hidden;
+            padding: 80px 20px 0 20px; /* مساحة علوية للزر العلوي فقط */
+            box-sizing: border-box;
+        }
+
+        /* إضافة مساحة سفلية وهمية لضمان عدم تغطية زر الواتساب للمحتوى عند النزول لأسفل */
+        body::after {
+            content: '';
+            height: 110px;
+            width: 100%;
+            flex-shrink: 0;
+            display: block;
         }
 
         body::before {
             content: '';
-            position: absolute;
+            position: fixed; /* تم تغييرها إلى fixed لمنع خلق مساحة وهمية تسبب التمرير لأسفل */
             top: -50%;
             left: -50%;
             width: 200%;
@@ -49,7 +61,7 @@
             gap: 8px;
             box-shadow: 0 5px 15px rgba(253, 160, 133, 0.4);
             cursor: pointer;
-            z-index: 1000; /* ليكون فوق كل العناصر */
+            z-index: 1000;
             transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             border: 2px solid rgba(255,255,255,0.5);
         }
@@ -59,10 +71,29 @@
             box-shadow: 0 8px 20px rgba(253, 160, 133, 0.6);
         }
 
+        .header-note {
+            position: relative;
+            width: 90%;
+            max-width: 550px;
+            text-align: center;
+            color: #fff;
+            font-size: 0.95em;
+            background: linear-gradient(90deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.6));
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+            backdrop-filter: blur(10px);
+            z-index: 10;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+            margin-top: auto; /* يعمل مع margin-bottom في الصندوق لتوسيط المحتوى بمرونة */
+            margin-bottom: 20px;
+        }
+
         .container {
             text-align: center;
             background: rgba(255, 255, 255, 0.05);
-            padding: 50px 40px;
+            padding: 40px 30px; /* تم تقليل المساحات الداخلية لتناسب المحتوى */
             border-radius: 30px;
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
@@ -71,10 +102,9 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
             width: 90%;
             max-width: 450px;
-            margin-top: 90px; /* تم زيادة المسافة لعدم التداخل مع الزر العلوي */
-            margin-bottom: 70px;
             position: relative;
             z-index: 1;
+            margin-bottom: auto; /* يكمل التوسيط المرن للمحتوى */
         }
 
         /* === تنسيق رسالة بسام للطلاب === */
@@ -100,6 +130,7 @@
         }
 
         h1 {
+            margin-top: 0;
             margin-bottom: 20px;
             font-size: 2.2em;
             font-weight: 800;
@@ -111,34 +142,14 @@
             line-height: 1.3;
         }
 
-        .header-note {
-            position: absolute;
-            top: 25px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 90%;
-            max-width: 550px;
-            text-align: center;
-            color: #fff;
-            font-size: 0.95em;
-            background: linear-gradient(90deg, rgba(239, 68, 68, 0.8), rgba(220, 38, 38, 0.6));
-            padding: 12px 25px;
-            border-radius: 50px;
-            box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
-            backdrop-filter: blur(10px);
-            z-index: 10;
-            font-weight: bold;
-            letter-spacing: 0.5px;
-        }
-
         .btn {
             display: flex;
             align-items: center;
             justify-content: center;
             width: 100%;
-            padding: 18px;
-            margin: 18px 0;
-            font-size: 1.25em;
+            padding: 16px;
+            margin: 15px 0;
+            font-size: 1.2em;
             color: white;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
@@ -193,7 +204,7 @@
         .group-btn {
             background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
             border: none;
-            margin-top: 30px;
+            margin-top: 25px;
             box-shadow: 0 8px 20px rgba(17, 153, 142, 0.3);
             font-size: 1.1em;
         }
@@ -208,7 +219,7 @@
         }
 
         .footer-text {
-            margin-top: 40px;
+            margin-top: 30px;
             font-size: 1.1em;
             line-height: 1.6;
             color: rgba(255,255,255,0.8);
@@ -230,7 +241,7 @@
         }
 
         .visitor-counter {
-            margin-top: 25px;
+            margin-top: 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -249,23 +260,23 @@
 
         .whatsapp-container {
             position: fixed;
-            bottom: 25px;
-            right: 25px;
+            bottom: 20px;
+            right: 20px;
             z-index: 1000;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
         .whatsapp-float {
-            width: 65px;
-            height: 65px;
+            width: 60px;
+            height: 60px;
             background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
             color: #FFF;
             border-radius: 50%;
             text-align: center;
-            font-size: 32px;
+            font-size: 30px;
             box-shadow: 0 6px 15px rgba(37, 211, 102, 0.4);
             display: flex;
             align-items: center;
@@ -298,10 +309,10 @@
             font-size: 11px;
             color: #fff;
             background-color: rgba(0, 0, 0, 0.7);
-            padding: 6px 10px;
+            padding: 5px 8px;
             border-radius: 8px;
             text-align: center;
-            max-width: 130px;
+            max-width: 120px;
             line-height: 1.4;
             backdrop-filter: blur(4px);
             border: 1px solid rgba(255,255,255,0.1);
@@ -310,10 +321,7 @@
         .ad-modal-overlay {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0; width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
             backdrop-filter: blur(8px);
             z-index: 2000;
@@ -344,103 +352,48 @@
             transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
 
-        .ad-content::-webkit-scrollbar {
-            width: 6px;
-        }
-        .ad-content::-webkit-scrollbar-thumb {
-            background-color: #ffd700;
-            border-radius: 10px;
-        }
+        .ad-content::-webkit-scrollbar { width: 6px; }
+        .ad-content::-webkit-scrollbar-thumb { background-color: #ffd700; border-radius: 10px; }
 
-        .ad-modal-overlay.show .ad-content {
-            transform: scale(1);
-        }
+        .ad-modal-overlay.show .ad-content { transform: scale(1); }
 
         .ad-close-btn {
             position: absolute;
-            top: 10px;
-            right: 10px;
-            background: #e53e3e;
-            color: white;
-            border: 2px solid #fff;
-            border-radius: 50%;
-            font-size: 20px;
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            line-height: 1;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 10;
+            top: 10px; right: 10px;
+            background: #e53e3e; color: white;
+            border: 2px solid #fff; border-radius: 50%;
+            font-size: 20px; width: 32px; height: 32px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; transition: all 0.3s; line-height: 1;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10;
         }
 
-        .ad-close-btn:hover {
-            background: #c53030;
-            transform: scale(1.1);
-        }
+        .ad-close-btn:hover { background: #c53030; transform: scale(1.1); }
 
         .ad-title {
-            color: #ffd700;
-            font-size: 1.6em; 
-            font-weight: 800;
-            margin-bottom: 12px;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.5);
-            margin-top: 10px; 
+            color: #ffd700; font-size: 1.6em; font-weight: 800;
+            margin-bottom: 12px; text-shadow: 0 2px 4px rgba(0,0,0,0.5); margin-top: 10px; 
         }
 
-        .ad-desc {
-            color: #e2e8f0;
-            font-size: 1em; 
-            line-height: 1.6;
-            margin-bottom: 15px;
-        }
+        .ad-desc { color: #e2e8f0; font-size: 1em; line-height: 1.6; margin-bottom: 15px; }
 
-        .contact-options {
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            margin-top: 10px;
-        }
+        .contact-options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
 
         .ad-action-btn {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 10px;
+            display: flex; align-items: center; justify-content: center; gap: 10px;
             background: linear-gradient(135deg, #f6d365 0%, #fda085 100%);
-            color: #2d3748;
-            padding: 10px 20px; 
-            border-radius: 20px;
-            font-size: 1.05em; 
-            font-weight: bold;
-            text-decoration: none;
-            box-shadow: 0 5px 10px rgba(253, 160, 133, 0.3);
-            transition: all 0.3s ease;
+            color: #2d3748; padding: 10px 20px; border-radius: 20px;
+            font-size: 1.05em; font-weight: bold; text-decoration: none;
+            box-shadow: 0 5px 10px rgba(253, 160, 133, 0.3); transition: all 0.3s ease;
         }
 
-        .ad-action-btn:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 15px rgba(253, 160, 133, 0.5);
-        }
-
-        .ad-icon {
-            font-size: 35px;
-            margin-bottom: 8px;
-        }
+        .ad-action-btn:hover { transform: translateY(-3px) scale(1.02); box-shadow: 0 8px 15px rgba(253, 160, 133, 0.5); }
+        .ad-icon { font-size: 35px; margin-bottom: 8px; }
 
         .countdown-box {
-            display: none; 
-            margin-bottom: 20px;
-            padding: 8px;
-            background: rgba(255, 215, 0, 0.1);
-            border: 1px dashed #ffd700;
-            border-radius: 15px;
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 0.85em;
+            display: none; margin-bottom: 20px; padding: 8px;
+            background: rgba(255, 215, 0, 0.1); border: 1px dashed #ffd700;
+            border-radius: 15px; color: #ffd700; font-weight: bold; font-size: 0.85em;
             animation: pulse-border 1.5s infinite alternate;
         }
 
@@ -449,31 +402,57 @@
             to { border-color: rgba(255, 215, 0, 1); }
         }
 
-        #countdown-timer {
-            font-size: 1.3em;
-            display: inline-block;
-            min-width: 25px;
-            color: #fff;
-        }
+        #countdown-timer { font-size: 1.3em; display: inline-block; min-width: 25px; color: #fff; }
 
-        /* تنسيقات الموبايل للزر العلوي وملاحظة الهيدر */
         @media (max-width: 768px) {
-            .header-note {
-                top: 80px; /* لعدم التداخل مع زر الحفلة العلوي في الموبايل */
-            }
-            .container {
-                margin-top: 130px;
+            body {
+                padding-top: 70px; /* مسافة علوية مناسبة للموبايل لحماية الزر العلوي */
             }
             .top-right-badge {
-                top: 15px;
-                right: 15px;
-                padding: 10px 15px;
+                top: 12px;
+                right: 12px;
+                padding: 8px 12px;
                 font-size: 0.85em;
             }
+            .header-note {
+                margin-top: 0;
+                margin-bottom: 15px;
+                font-size: 0.85em;
+                padding: 10px 15px;
+                width: 92%;
+                border-radius: 15px;
+            }
+            .container {
+                padding: 25px 20px;
+            }
+            h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+            .heartfelt-message {
+                padding: 15px;
+                font-size: 0.95em;
+                margin-bottom: 20px;
+            }
+            .btn {
+                padding: 14px;
+                font-size: 1.1em;
+                margin: 10px 0;
+            }
+            .group-btn {
+                margin-top: 20px;
+            }
+            .footer-text {
+                margin-top: 25px;
+                padding-top: 15px;
+            }
+            /* تقليل حجم الإعلانات وزر الواتساب على الموبايل لعدم الزحام */
             .ad-title { font-size: 1.4em; }
             .ad-desc { font-size: 0.95em; }
             .ad-action-btn { padding: 8px 15px; font-size: 0.95em; }
             .contact-options { gap: 8px; }
+            .whatsapp-float { width: 50px; height: 50px; font-size: 26px; }
+            .whatsapp-container { bottom: 15px; right: 15px; }
         }
     </style>
 </head>
@@ -485,13 +464,12 @@
     </button>
 
     <!-- التنبيه في أعلى الصفحة -->
-    <!--<div class="header-note">
-        ⚠️ تنبيه: صلي علي النبي, متعتمدش علي الموقع اعتماد كامل، الهدف منه مراجعة ما ذاكرته من بنك الأسئلة.
-    </div>
+    <div class="header-note">
+صلي علي النبي . كل الاسئله ال ف اللينك من بنك الاسئله فا ممكن تلاقه سؤال اتحل ب الغلط مني فا راجع البنك الاصلي للتاكيج ليك    </div>
 
-    <!-- ================= الواجهة الرئيسية (مجانية بالكامل) ================= -->
+    <!-- ================= الواجهة الرئيسية ================= -->
     <div class="container">
-        <h1> ماده استراتيجيه نظم</h1>
+        <h1>ماده استراتيجيه نظم</h1>
         
         <!-- رسالة بسام للطلاب -->
         <div class="heartfelt-message">
@@ -525,7 +503,7 @@
         </div>
 
         <!-- عداد الزوار -->
-        <!--<div class="visitor-counter">
+        <div class="visitor-counter">
             <span class="visitor-label">مرات الزيارة</span>
             <img src="https://visitor-badge.laobi.icu/badge?page_id=bassam_sys_strategy_home_v2" alt="عدد الزوار" style="height: 22px;">
         </div>
@@ -534,7 +512,7 @@
     <!-- مجموعة واتساب العائمة -->
     <div class="whatsapp-container">
         <a href="https://wa.me/201286094595" class="whatsapp-float" target="_blank" title="تواصل معنا عبر واتساب">
-            <svg style="width: 32px; height: 32px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <svg style="width: 28px; height: 28px; fill: white;" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                 <path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.893 11.892-1.99-.001-3.951-.5-5.688-1.448l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.462-4.415-9.89-9.881-9.892-5.452 0-9.887 4.434-9.889 9.884-.001 2.225.651 3.891 1.746 5.634l-.999 3.648 3.742-.981zm11.387-5.464c-.074-.124-.272-.198-.57-.347-.297-.149-1.758-8.683-2.031-.967-.272-.297-.471-.446-.966-.446s-1.016.149-1.562.744c-.545.595-1.436 1.339-1.436 3.271 0 1.933 1.411 3.816 1.61 4.089.198.272 2.753 4.204 6.671 5.895 2.673 1.153 3.216.923 3.786.866.57-.057 1.832-.749 2.09-1.472.258-.723.258-1.339.181-1.472z"/>
             </svg>
         </a>
@@ -553,7 +531,6 @@
             <div class="ad-icon">🎓✨</div>
             <div class="ad-title">إعلان هام لفرقة رابعة<br><span style="font-size: 0.8em; color: #fff;">خريجي دفعة 2026</span></div>
             
-            <!-- تم تعديل نص الرسالة وإضافة زر الجروب هنا -->
             <div class="ad-desc">
                 <strong>أخواتي وأبطال دفعة 2026 🌟</strong>
                 <br><br>
@@ -562,7 +539,6 @@
                 <span style="color: #f56565; font-weight: bold;">مستنيينكم نختم المشوار سوا.. العدد محدود جداً!</span>
             </div>
             
-            <!-- زر الانضمام لجروب الحفلة -->
             <a href="https://chat.whatsapp.com/JIpfaybBvZl8L8c1EquT7B?mode=gi_t" class="ad-action-btn" target="_blank" style="margin-bottom: 20px; background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); color: white; border: none;">
                 <span style="font-size: 1.3em;">📢</span> انضم لجروب الحفلة الآن
             </a>
