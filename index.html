@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنك أسئلة  </title>
+    <title>بنك أسئلة</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700;800&display=swap');
 
@@ -18,6 +18,84 @@
             color: #333;
         }
 
+        /* تنسيق الشاشة الترحيبية لجنجونتي */
+        .welcome-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(8px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .welcome-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            max-width: 400px;
+            width: 85%;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+            transform: scale(0.8);
+            opacity: 0;
+            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        @keyframes popIn {
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .welcome-icon {
+            font-size: 60px;
+            margin-bottom: 15px;
+            animation: floating 2s ease-in-out infinite;
+        }
+
+        @keyframes floating {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+            100% { transform: translateY(0); }
+        }
+
+        .welcome-title {
+            color: #764ba2;
+            font-weight: 800;
+            font-size: 1.8em;
+            margin-bottom: 15px;
+        }
+
+        .welcome-text {
+            color: #555;
+            font-size: 1.2em;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .welcome-btn {
+            background: linear-gradient(90deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.2em;
+            font-weight: bold;
+            font-family: 'Tajawal', sans-serif;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(118, 75, 162, 0.4);
+        }
+
+        .welcome-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(118, 75, 162, 0.6);
+        }
+
+        /* تنسيق الصفحة الرئيسية للمواد */
         .main-card {
             background: rgba(255, 255, 255, 0.95);
             width: 90%;
@@ -69,8 +147,22 @@
 </head>
 <body>
 
+    <!-- الشاشة الترحيبية لجنا -->
+    <div class="welcome-overlay" id="welcomeScreen">
+        <div class="welcome-card">
+            <div class="welcome-icon">💖</div>
+            <div class="welcome-title">لعيون جنجونتي الحلوين</div>
+            <div class="welcome-text">
+                أشطر وأحلى جنا في الدنيا..<br>
+                ربنا يوفقك في امتحاناتك وتجيبي أعلى التقديرات يا رب 🌟
+            </div>
+            <button class="welcome-btn" onclick="closeWelcome()">يلا نبدأ المذاكرة 💪</button>
+        </div>
+    </div>
+
+    <!-- قائمة المواد -->
     <div class="main-card">
-        <h1>📚 بنك أسئلة الفرقة الرابعة</h1>
+        <h1>📚 بنك أسئلة الفرقة الثالثه</h1>
         
         <div class="subjects-container">
             <a href="accounting.html" class="subject-btn">
@@ -94,5 +186,15 @@
         </div>
     </div>
 
+    <script>
+        function closeWelcome() {
+            const overlay = document.getElementById('welcomeScreen');
+            overlay.style.transition = 'opacity 0.5s ease';
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 500);
+        }
+    </script>
 </body>
 </html>
